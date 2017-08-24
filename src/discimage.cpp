@@ -126,9 +126,18 @@ DiscImage::DiscImage( const char* pOutput, const char* pInput )
 		if ( GlobalData::Instance().GetBootFile() != NULL )
 		{
 			char pPlingBoot[ 64 ];
-			strcpy( pPlingBoot, "*BASIC\r*RUN " );
-			strcat( pPlingBoot, GlobalData::Instance().GetBootFile() );
-			strcat( pPlingBoot, "\r" );
+			if (GlobalData::Instance().GetBootType()==1)	//Boottype=1 a BASIC file to CH.""
+			{
+				strcpy( pPlingBoot, "*BASIC\rCH.\"" );
+				strcat( pPlingBoot, GlobalData::Instance().GetBootFile() );
+				strcat( pPlingBoot, "\"\r" );
+			}
+			else //default mcode to *RUN
+			{
+				strcpy( pPlingBoot, "*BASIC\r*RUN " );
+				strcat( pPlingBoot, GlobalData::Instance().GetBootFile() );
+				strcat( pPlingBoot, "\r" );
+			}
 
 			AddFile( "!Boot", reinterpret_cast< unsigned char* >( pPlingBoot ), 0, 0xFFFFFF, strlen( pPlingBoot ) );
 

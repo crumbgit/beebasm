@@ -39,6 +39,7 @@ public:
 
 	inline void SetPass( int i )				{ m_pass = i; }
 	inline void SetBootFile( const char* p )	{ m_pBootFile = p; }
+	inline void SetBootType( int i )			{ m_pBootType = i; }
 	inline void SetVerbose( bool b )			{ m_bVerbose = b; }
 	inline void SetUseDiscImage( bool b )		{ m_bUseDiscImage = b; }
 	inline void SetDiscImage( DiscImage* d )	{ m_pDiscImage = d; }
@@ -53,6 +54,7 @@ public:
 	inline bool IsSecondPass() const			{ return ( m_pass == 1 ); }
 	inline bool ShouldOutputAsm() const			{ return ( m_pass == 1 && m_bVerbose ); }
 	inline const char* GetBootFile() const		{ return m_pBootFile; }
+	inline int GetBootType() const			{ return m_pBootType; }
 	inline bool UsesDiscImage() const			{ return m_bUseDiscImage; }
 	inline DiscImage* GetDiscImage() const		{ return m_pDiscImage; }
 	inline int GetNextForId()					{ return m_forId++; }
@@ -70,6 +72,7 @@ private:
 
 	int							m_pass;
 	const char*					m_pBootFile;
+	int 						m_pBootType;
 	bool						m_bVerbose;
 	bool						m_bUseDiscImage;
 	DiscImage*					m_pDiscImage;

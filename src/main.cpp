@@ -70,6 +70,7 @@ int main( int argc, char* argv[] )
 		WAITING_FOR_DISC_INPUT_FILENAME,
 		WAITING_FOR_DISC_OUTPUT_FILENAME,
 		WAITING_FOR_BOOT_FILENAME,
+		WAITING_FOR_BOOT_TYPE,		
 		WAITING_FOR_DISC_OPTION
 
 	} state = READY;
@@ -106,6 +107,10 @@ int main( int argc, char* argv[] )
 				{
 					state = WAITING_FOR_BOOT_FILENAME;
 				}
+				else if ( strcmp( argv[i], "-boottype" ) == 0 )
+				{
+					state = WAITING_FOR_BOOT_TYPE;
+				}				
 				else if ( strcmp( argv[i], "-opt" ) == 0 )
 				{
 					state = WAITING_FOR_DISC_OPTION;
@@ -122,15 +127,16 @@ int main( int argc, char* argv[] )
 				{
 					cout << "beebasm " VERSION << endl << endl;
 					cout << "Possible options:" << endl;
-					cout << " -i <file>      Specify source filename" << endl;
-					cout << " -o <file>      Specify output filename (when not specified by SAVE command)" << endl;
-					cout << " -di <file>     Specify a disc image file to be added to" << endl;
-					cout << " -do <file>     Specify a disc image file to output" << endl;
-					cout << " -boot <file>   Specify a filename to be run by !BOOT on a new disc image" << endl;
-					cout << " -opt <opt>     Specify the *OPT 4,n for the generated disc image" << endl;
-					cout << " -v             Verbose output" << endl;
-					cout << " -d             Dump all global symbols after assembly" << endl;
-					cout << " --help         See this help again" << endl;
+					cout << " -i <file>        Specify source filename" << endl;
+					cout << " -o <file>        Specify output filename (when not specified by SAVE command)" << endl;
+					cout << " -di <file>       Specify a disc image file to be added to" << endl;
+					cout << " -do <file>       Specify a disc image file to output" << endl;
+					cout << " -boot <file>     Specify a filename to be run by !BOOT on a new disc image" << endl;
+					cout << " -boottype <opt>  Specify type of !BOOT 0=*RUN (default) 1=CHAIN" << endl;					
+					cout << " -opt <opt>       Specify the *OPT 4,n for the generated disc image" << endl;
+					cout << " -v               Verbose output" << endl;
+					cout << " -d               Dump all global symbols after assembly" << endl;
+					cout << " --help           See this help again" << endl;
 					return EXIT_SUCCESS;
 				}
 				else
@@ -178,6 +184,12 @@ int main( int argc, char* argv[] )
 				state = READY;
 				break;
 
+			case WAITING_FOR_BOOT_TYPE:
+				
+				GlobalData::Instance().SetBootType( std::strtol( argv[i], NULL, 10 )  );
+				state = READY;
+				break;
+				
 			case WAITING_FOR_DISC_OPTION:
 
 				GlobalData::Instance().SetDiscOption( std::strtol( argv[i], NULL, 10 ) );
