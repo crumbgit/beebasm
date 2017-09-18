@@ -713,6 +713,8 @@ based on the above demo, but it runs at a low address (&300).
 
 9. VERSION HISTORY
 
+24/08/2017  1.08b Added boot option to also CHAIN BASIC files.
+
 19/01/2012  1.08  Fixed makefile for GCC (MinGW) builds.
                   Added COPYBLOCK command to manage blocks of memory.
 06/10/2011  1.07  Fixed mixed-case bug for keywords (so now oddities such as
